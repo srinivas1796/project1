@@ -1,0 +1,56 @@
+{% include "title.html" %}
+{% include "menu.html" %}
+<br/>
+<table align="center" border="2">
+    <tr>
+        <th>
+<form action="{% url 'savemerchant' %}" method="post">
+    {% csrf_token %}
+<table align="center" border="2">
+    <tr>
+        <td>MERCHANT ID: <input type="number" required value="{{ mid }}" name="mid"></td>
+    </tr>
+    <tr>
+        <td>MERCHANT NAME: <input type="text" required name="mname"></td>
+    </tr>
+    <tr>
+        <td>MERCHANT CONTACT: <input type="number" required name="mcontact"></td>
+    </tr>
+    <tr>
+        <td>MERCHANT EMAIL: <input type="email" required name="memail"></td>
+    </tr>
+    <tr>
+        <td>MERCHANT PASSWORD: <input type="password" required name="mpassword" value="{{ mpassword }}"></td>
+    </tr>
+    <tr>
+        <th align="center"><button type="submit">Save</button></th>
+    </tr>
+</table>
+    </form></th>
+        <th>
+            <table align="center" border="2">
+                <tr>
+                    <th>MERCHANT ID</th>
+                    <th>MERCHANT NAME</th>
+                    <th>MERCHANT CONTACT</th>
+                    <th>MERCHANT MAIL</th>
+                    <th>DELETE</th>
+                </tr>
+                {% for x in data %}
+                    <tr>
+                    <th>{{x.merchant_id}}</th>
+                    <th>{{x.merchant_name}}</th>
+                    <th>{{x.merchant_contact}}</th>
+                    <th>{{x.merchant_email}}</th>
+                    <th>
+                        <form action="{% url 'delete' %}" method="post">
+                            {% csrf_token %}
+                        <input type="hidden" name="del_mid" value="{{ x.merchant_id }}">
+                        <button type="submit">Delete</button>
+                </form></th>
+                </tr>
+                {% endfor %}
+            </table>
+        </th>
+    </tr>
+    </table>
